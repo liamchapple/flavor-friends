@@ -746,5 +746,19 @@ window.KkoGame={mount};
 })();
 /*END*/</script>
 <script>KkoGame.mount(document.getElementById("kkoGame"),{embedded:true});</script>
+<script>/*ANALYTICS: cookie-free, anonymous time per section. Add ?notrack=1 once to exclude this browser.*/
+(function(){try{if(location.search.indexOf('notrack=1')>=0)localStorage.setItem('ff_notrack','1');if(localStorage.getItem('ff_notrack'))return}catch(e){}
+var id=Math.random().toString(36).slice(2,10)+Date.now().toString(36),d={},ev=['visit'],last=Date.now();
+var secs=[].slice.call(document.querySelectorAll('header#top,section[id]')),film=document.querySelector('.film video');
+function cur(){var m=innerHeight/2;for(var i=0;i<secs.length;i++){var r=secs[i].getBoundingClientRect();if(r.top<=m&&r.bottom>m)return secs[i].id}return 'other'}
+['scroll','pointerdown','keydown','pointermove','touchstart'].forEach(function(n){addEventListener(n,function(){last=Date.now()},{passive:true,capture:true})});
+setInterval(function(){if(document.hidden)return;if(Date.now()-last>60000&&!(film&&!film.paused))return;var c=cur();d[c]=(d[c]||0)+1},1000);
+function send(){var has=ev.length;for(var k in d)has=1;if(!has)return;var r='';try{r=document.referrer?new URL(document.referrer).hostname:''}catch(e){}
+var b=JSON.stringify({v:id,d:d,e:ev,w:innerWidth,r:r});d={};ev=[];try{navigator.sendBeacon('/t',new Blob([b],{type:'text/plain'}))}catch(e){}}
+setInterval(send,10000);addEventListener('pagehide',send);document.addEventListener('visibilitychange',function(){if(document.hidden)send()});setTimeout(send,3000);
+function once(el,type,name){var f=0;if(el)el.addEventListener(type,function(){if(!f){f=1;ev.push(name)}},true)}
+once(film,'play','film_play');once(film,'ended','film_finished');once(document.getElementById('kkoGame'),'pointerdown','game_played');
+once(document.getElementById('worldPick'),'click','worlds_used');once(document.getElementById('roster'),'click','crew_used');once(document.querySelector('.player'),'click','story_player_used');once(document.getElementById('scriptT'),'click','script_line_clicked');
+})();</script>
 </body>
 </html>

@@ -1,3 +1,5 @@
-FROM caddy:2-alpine
-COPY Caddyfile /etc/caddy/Caddyfile
-COPY site /srv
+FROM node:22-alpine
+WORKDIR /app
+COPY server.js ./
+COPY site ./site
+CMD ["node","server.js"]
